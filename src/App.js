@@ -5,29 +5,24 @@ import JokesList from './components/jokesList';
 import JokesForm from './components/JokesForm';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchStart, fetchSuccess } from './actions';
-import axios from 'axios';
+import { getJokes } from './actions';
+
 
 
 function App(props) {
-  const {loading, jokes, error} = props;
+  const {loading, jokes, error, getJokes} = props;
   // const jokes = data;
   // const loading = false;
   // const error = '';
 
   useEffect(()=>{
-    props.fetchStart();
-    axios.get(`https://official-joke-api.appspot.com/random_ten`)
-    .then(res => {
-      console.log(res.data);
-      props.fetchSuccess(res.data);
-    })
+    getJokes();
   },[])
   
 
   return (
     <div className="App">
-      Laughs for free
+      <h1>Laughs for free</h1>
       <JokesForm />
 
       {
@@ -50,4 +45,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {fetchStart, fetchSuccess})(App);
+export default connect(mapStateToProps, {getJokes})(App);
